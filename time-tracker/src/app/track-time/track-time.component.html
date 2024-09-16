@@ -1,0 +1,63 @@
+<!-- track-time.component.html -->
+<div class="container my-4">
+  <h2 class="text-center mb-4">Track Time - Current Month</h2>
+
+  <!-- Form for adding dates -->
+  <form (ngSubmit)="addDate(dateType.value, selectedDate.value)" class="mb-4">
+    <div class="form-group">
+      <label for="date">Select a Date:</label>
+      <input id="date" type="date" #selectedDate class="form-control">
+    </div>
+    
+    <div class="form-group">
+      <label for="type">Date Type:</label>
+      <select id="type" #dateType class="form-control">
+        <option value="completed">Completed</option>
+        <option value="anticipated">Anticipated</option>
+      </select>
+    </div>
+    
+    <button type="submit" class="btn btn-success">Add Date</button>
+  </form>
+
+  <!-- Calendar display -->
+  <div class="calendar mb-4">
+    <h3 class="text-center mb-4">Calendar for {{ currentMonth | date: 'MMMM yyyy' }}</h3>
+
+    <!-- Days of the week -->
+    <div class="calendar-header d-grid grid-cols-7 gap-1 text-center">
+      <div class="calendar-day-header">S</div>
+      <div class="calendar-day-header">M</div>
+      <div class="calendar-day-header">T</div>
+      <div class="calendar-day-header">W</div>
+      <div class="calendar-day-header">T</div>
+      <div class="calendar-day-header">F</div>
+      <div class="calendar-day-header">S</div>
+    </div>
+
+    <!-- Calendar grid -->
+    <div class="calendar-grid d-grid grid-cols-7 gap-1 text-center">
+      <!-- Empty slots for days before the start of the month -->
+      <div *ngFor="let day of [].constructor(startDay)" class="calendar-day"></div>
+
+      <!-- Loop through days of the current month -->
+      <div *ngFor="let day of [].constructor(totalDaysInMonth); let i = index" 
+           class="calendar-day" 
+           [ngClass]="{
+             'completed': isCompleted(i + 1),
+             'anticipated': isAnticipated(i + 1)
+           }">
+        {{ i + 1 }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Section -->
+  <div class="summary mt-4 p-3 border rounded shadow-sm bg-light">
+    <h3 class="mb-3">Summary</h3>
+    <p class="mb-2">Completed Days: <span class="font-weight-bold">{{ completedDates.length }}</span></p>
+    <p class="mb-2">Anticipated Days: <span class="font-weight-bold">{{ anticipatedDates.length }}</span></p>
+    <p class="mb-2">Remaining Days: <span class="font-weight-bold">{{ getRemainingDays() }}</span></p>
+    <p class="font-weight-bold">Summary: <span class="text-primary">{{ getPercentageSpent() | number: '1.0-2' }}%</span></p>
+  </div>
+</div>
