@@ -6,17 +6,26 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TrackTimeComponent } from './track-time/track-time.component';
 import { HomeComponent } from './home/home.component';
+import { AiSuggestionComponent } from './ai-suggestion/ai-suggestion.component';
+import { HttpClientModule } from '@angular/common/http';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TrackTimeComponent,
-    HomeComponent
+    HomeComponent,
+    AiSuggestionComponent
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    
+
   ],
   providers: [],
   bootstrap: [AppComponent]
