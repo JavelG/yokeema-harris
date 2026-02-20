@@ -1,0 +1,87 @@
+<div class="page">
+  <nav class="nav">
+    <div class="nav__inner">
+      <div class="brand">
+        <span class="brand__logo">{{ name }}</span>
+      </div>
+      <button class="btn-gold btn-gold--sm" (click)="openBooking()">Schedule</button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero__portrait">
+        <img src="assets/notary-photo.jpg" 
+             alt="Yokeema Harris" 
+             onerror="this.src='https://ui-avatars.com/api/?name=Yokeema+Harris&background=d4af37&color=fff&size=400'">
+      </div>
+      
+      <h1 class="hero__title">
+        The Gold Standard <span>of Notary Services</span>
+      </h1>
+      <div class="signature">{{ name }}</div>
+      
+      <p class="hero__subtitle">
+        Providing sophisticated, mobile legal document authentication with absolute precision. 
+        Serving the legal and financial needs of Richland County with integrity.
+      </p>
+      
+      <div class="hero__actions">
+        <button class="btn-gold" (click)="openBooking()">Request Signing</button>
+        <a [href]="telHref" class="btn-outline">{{ phoneDisplay }}</a>
+      </div>
+
+      <div class="hero__secondary-actions">
+        <a href="assets/Keema-card.jpg" download="Yokeema-Harris-Notary.jpg" class="btn-text">
+          <span class="icon">↓</span> Save Business Card
+        </a>
+        <button (click)="shareSite()" class="btn-text">
+          <span class="icon"></span> Share Profile
+        </button>
+      </div>
+    </section>
+
+    <section class="service-grid">
+      <div class="service-item" *ngFor="let s of services">
+        <h3>{{ s.label }}</h3>
+      </div>
+    </section>
+
+    <section class="map-section">
+      <h2 class="section-title">Service Area</h2>
+      <p class="section-subtitle">South Carolina • Richland County Area</p>
+      <div class="map-section__frame">
+        <iframe 
+          width="100%" height="100%" frameborder="0" 
+          style="border:0; filter: grayscale(1) sepia(30%) contrast(1.1) brightness(0.95);" 
+          src="https://maps.google.com/maps?q=Richland%20County,%20SC&t=&z=10&ie=UTF8&iwloc=&output=embed" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-overlay" *ngIf="isBookingOpen" (click)="closeBooking()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="closeBooking()">×</button>
+      <h2 class="modal-title">Booking</h2>
+      <p class="modal-subtitle">Provide details for your signing request</p>
+      
+      <form class="modal-form">
+        <input class="form-input" type="text" [(ngModel)]="form.fullName" name="fullName" placeholder="FULL NAME">
+        <input class="form-input" type="text" [(ngModel)]="form.location" name="location" placeholder="SIGNING LOCATION ADDRESS">
+        <div class="form-row">
+          <input class="form-input" type="date" [(ngModel)]="form.preferredDate" name="preferredDate">
+          <input class="form-input" type="time" [(ngModel)]="form.preferredTime" name="time">
+        </div>
+        <input class="form-input" type="text" [(ngModel)]="form.documentType" name="documentType" placeholder="DOCUMENT TYPE (E.G. LOAN, POA)">
+        <textarea class="form-input" [(ngModel)]="form.notes" name="notes" placeholder="ADDITIONAL NOTES" rows="2"></textarea>
+        <a [href]="appointmentMailtoHref" class="btn-gold btn-block">Generate Request Email</a>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>{{ name }} • {{ titleLine }} • {{ stateLine }}</p>
+  </footer>
+</div>
